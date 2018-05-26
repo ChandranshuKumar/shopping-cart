@@ -29,22 +29,27 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fa fa-users"></i>User
+          <i class="fa fa-users"></i>
+          <% if(!currentUser){ %>
+          User
+          <% } else{ %>
+          <%= currentUser.username %>
+          <% } %>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <% if(!currentUser){ %>
-            <a class="dropdown-item" href="/user/signin">Login</a>
-            <a class="dropdown-item" href="/user/signup">Sign Up</a>
+            <a class="dropdown-item" href="/user/signin"><i class="fa fa-user"></i>Login</a>
+            <a class="dropdown-item" href="/user/signup"><i class="fa fa-user-plus"></i>Sign Up</a>
           <% } else{ %>
-            <a href="#" class="dropdown-item">Signed In As <%= currentUser.username %></a>
-            <a class="dropdown-item" href="/user/logout">Logout</a>
+            <a href="/user/profile" class="dropdown-item"><i class="fa fa-cog"></i>Profile</a>
+            <a class="dropdown-item" href="/user/logout"><i class="fa fa-sign-out"></i>Logout</a>
           <% } %>
         </div>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search for any item" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
 </nav>      

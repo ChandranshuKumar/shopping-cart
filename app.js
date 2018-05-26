@@ -1,14 +1,18 @@
 var express    = require("express"),
     app        = express(),
-    mongoose   = require("mongoose"),
-    flash      = require("connect-flash"),
     bodyParser = require("body-parser"),
+    flash      = require("connect-flash"),
+    mongoose   = require("mongoose"),
+    session    = require("express-session"),
     passport   = require("passport"),
     LocalStrategy = require("passport-local"),
+    MongoStore = require("connect-mongo")(session),
     Product    = require("./models/product"),
     User       = require("./models/user"),
+    Cart       = require("./models/cart"),
     seedDB     = require("./product-seed");
 
+var userRoutes = require("./routes/user");
 
 mongoose.connect("mongodb://localhost/shopping");
 
@@ -19,10 +23,12 @@ app.use(flash());
 seedDB();
 
 //Passport and Session Config
-app.use(require("express-session")({
+app.use(session({
     secret: "This is secret bro!",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: new MongoStore({mongooseConnection: mongoose.connection}),
+    cookie: { maxAge: 60 * 60 * 1000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -33,6 +39,7 @@ passport.deserializeUser(User.deserializeUser());
 //Takes user info and pass it to all templates rather than addind it to all tamplates one by one.
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
+    res.locals.session = req.session;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     next();
@@ -50,38 +57,23 @@ app.get("/", function(req, res){
     });
 });
 
-//REGISTER
-app.get("/user/signup", function(req, res){
-   res.render("user/signup"); 
-});
-app.post("/user/signup", function(req, res){
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user){
+app.get("/add-to-cart/:id", function(req, res){
+    var productId = req.params.id;
+    var cart = new Cart(req.session.cart ? req.session.cart : {items: {}});
+    
+    Product.findById(productId, function(err, product){
         if(err){
-            console.log(err);
-            req.flash("error", err.message);
-            return res.redirect("/user/signup");
+            return res.redirect("/");
         }
-        passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Welcome to GameCart " + user.username);
-            res.redirect("/");
-        });
+        cart.add(product, product.id);
+        req.session.cart = cart;
+        console.log(req.session.cart);
+        res.redirect("/");
     });
 });
-//LOGIN
-app.get("/user/signin", function(req, res) {
-    res.render("user/signin");
-});
-app.post("/user/signin", passport.authenticate("local", {
-    successRedirect : "/",
-    failureRedirect : "/user/signin"
-}), function(req, res) {});
-//LogOut
-app.get("/user/logout", function(req, res) {
-    req.logout();
-    req.flash("success", "Logged you out!");
-    res.redirect("/");
-});
+
+
+app.use("/user", userRoutes);
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
