@@ -1,0 +1,47 @@
+.nav-item{
+    margin-right: 7px;
+}
+
+.fa-shopping-cart{
+    margin-right: 3px;
+}
+
+.fa-users{
+    margin-right: 2px;
+}
+
+.jumbotron{
+    height: 260px;
+    background-image: url("https://images-eu.ssl-images-amazon.com/images/G/31/img18/PC/Tablets/Revised/tablet_bunk_1500X300._CB477410257_.jpg");
+    background-size: cover;
+    text-align: center;
+}
+
+.thumbnail img{
+    max-height: 150px;
+    width: 100%;
+}
+
+.thumbnail{
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.price{
+    font-weight:bold;
+    font-size: 16px;
+}
+
+.description{
+    color: #7f7f7f;
+}
+.offer{
+    color: green;
+}
+
+.clearfix{
+    padding: 0 4px 4px 4px;
+}
+#flash{
+    margin-top: 5px;
+}

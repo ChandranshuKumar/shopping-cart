@@ -1,0 +1,29 @@
+<% include ./partials/header %>
+
+<div class="jumbotron jumbotron-fluid">
+ <!--Just a jumbotron to display latest offers -->
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        <% products.forEach(function(product){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail border rounded">
+                <img class="img-responsive" src="<%= product.image %>">
+                <div class="caption">
+                    <h5><strong><%= product.title %></strong></h5>
+                    <p class="offer"><%= product.offer %></p>
+                </div>
+                <div class="clearfix">
+                    <div class="price pull-left">Rs.<%= product.price %></div>
+                    <a href="#" class="btn btn-outline-success pull-right"><i class="fa fa-cart-plus"></i>Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+
+
+
+<% include ./partials/footer %>
