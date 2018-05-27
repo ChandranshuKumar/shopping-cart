@@ -79,9 +79,9 @@ app.use("/user", userRoutes);
 //For C9 setup
 // app.listen(process.env.PORT, process.env.IP, function(){
 //     console.log("Server Started!");
-// })
+// });
 
-//Local Setup
+// Local Setup
 app.listen(7000, function(){
     console.log("Server Started!");
 })
