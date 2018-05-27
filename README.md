@@ -13,3 +13,5 @@
     <li>Payment Method</li>
     <li>UI changes</li>
 </ul>
+
+<p>Run it on localhost:7000 and make sure your MongoDB server is running.</p>
