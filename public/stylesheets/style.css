@@ -10,11 +10,9 @@
     margin-right: 2px;
 }
 
-.jumbotron{
-    height: 260px;
-    background-image: url("https://images-eu.ssl-images-amazon.com/images/G/31/img18/PC/Tablets/Revised/tablet_bunk_1500X300._CB477410257_.jpg");
-    background-size: cover;
-    text-align: center;
+#products{
+    position: relative;
+    margin-top: 40px;
 }
 
 .thumbnail img{
@@ -30,6 +28,8 @@
 .price{
     font-weight:bold;
     font-size: 16px;
+    margin-left: 6px;
+    margin-top: 6px;
 }
 
 .description{
