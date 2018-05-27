@@ -14,7 +14,8 @@ var express    = require("express"),
 
 var userRoutes = require("./routes/user");
 
-mongoose.connect("mongodb://localhost/shopping");
+// mongoose.connect("mongodb://localhost/shopping"); //C9 Setup
+mongoose.connect("mongodb://localhost:27017/shopping"); //Locat Setup
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -75,7 +76,12 @@ app.get("/add-to-cart/:id", function(req, res){
 
 app.use("/user", userRoutes);
 
+//For C9 setup
+// app.listen(process.env.PORT, process.env.IP, function(){
+//     console.log("Server Started!");
+// })
 
-app.listen(process.env.PORT, process.env.IP, function(){
+//Local Setup
+app.listen(7000, function(){
     console.log("Server Started!");
 })
