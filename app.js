@@ -1,4 +1,4 @@
-var express    = require("express"),
+let express    = require("express"),
     app        = express(),
     bodyParser = require("body-parser"),
     flash      = require("connect-flash"),
@@ -14,8 +14,8 @@ var express    = require("express"),
 
 var userRoutes = require("./routes/user");
 
-// mongoose.connect("mongodb://localhost/shopping"); //C9 Setup
-mongoose.connect("mongodb://localhost:27017/shopping"); //Locat Setup
+const db_url = "mongodb://chandranshu:12345678a@ds145146.mlab.com:45146/shopping-cart"
+mongoose.connect(db_url, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -73,15 +73,8 @@ app.get("/add-to-cart/:id", function(req, res){
     });
 });
 
-
 app.use("/user", userRoutes);
 
-//For C9 setup
-// app.listen(process.env.PORT, process.env.IP, function(){
-//     console.log("Server Started!");
-// });
-
-// Local Setup
 app.listen(7000, function(){
     console.log("Server Started!");
 })

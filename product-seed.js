@@ -47,17 +47,11 @@ var products = [
 ];
 
 function seedDB(){
-    Product.remove({}, function(err){
-        if(err){
-            console.log(err);
-        }
-        // console.log("Removed Products");
-        products.forEach(function(seed){
-            Product.create(seed, function(err, product){
-                if(err){
-                    console.log(err);
-                }
-                // console.log("Prduct Created");
+    Product.remove({}, err => {
+        if(err) console.log(err);
+        products.forEach(seed => {
+            Product.create(seed, (err, product) => {
+                if(err) console.log(err);
                 product.save();
             });
         });
@@ -65,6 +59,3 @@ function seedDB(){
 }
 
 module.exports = seedDB;
-
-
-
